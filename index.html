@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<!--
+	<script src="js/d3.v2.js"></script>
+	-->
+	<script type="text/javascript" src="https://raw.github.com/mbostock/d3/master/d3.v2.min.js"></script>
+</head>
+
+<body>
+	<script>
+		var chart = d3.select('body').append('svg')
+			.attr('class', 'chart')
+			.attr('width', 400)
+			.attr('height', 400);
+
+		chart.append('svg:circle')
+			.style('fill', 'yellow')
+			.attr('cx', 200)
+			.attr('cy', 200)
+			.attr('r', 100);
+
+		chart.append('svg:circle')
+			.style('fill', 'white')
+			.attr('cx', 160)
+			.attr('cy', 180)
+			.attr('r', 20);
+
+		chart.append('svg:circle')
+			.style('fill', 'white')
+			.attr('cx', 240)
+			.attr('cy', 180)
+			.attr('r', 20);
+
+		var eyes = chart.append('svg:g')
+			eyes.attr('transform', 'translate(0,0)');
+
+		var leftEye = eyes.append('svg:circle')
+			.style('fill', 'black')
+			.attr('cx', 150)
+			.attr('cy', 175)
+			.attr('r', 10);
+
+		var rightEye = eyes.append('svg:circle')
+			.style('fill', 'black')
+			.attr('cx', 230)
+			.attr('cy', 175)
+			.attr('r', 10);
+
+		/*chart.selectAll('circle')
+			.data(data)
+			.enter()*/
+		//data.push({ x:step, y:step });
+
+		function doFancyTrans() {
+			d3.select('g')
+				.transition()
+				.duration(350)
+				.attr('transform', function(d) {
+					var xval = Math.random() * 20;
+					var yval = Math.random() * 10;
+					return 'translate(' + xval + ',' + yval + ')';
+				});
+		}
+		//doFancyTrans();
+		setInterval(doFancyTrans, 700);
+
+/*		chart.append('svg:circle')
+			.attr('cx', 5)
+			.attr('cy', 5)
+			.attr('r', 10);
+*/
+/*		var xScale = d3.scale.linear()
+			.domain([0, 10])
+			.range([400, 400]);
+*/
+	</script>
+</body>
+
+</html>
