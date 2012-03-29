@@ -8,9 +8,7 @@
 <body>
 	<script>
 		// General variables
-		var mouseX = 0,
-			mouseY = 0,
-			mrYellowX = 200,
+		var mrYellowX = 200,
 			mrYellowY = 200;
 
 		// Build Mr. Yellow
@@ -39,27 +37,22 @@
 			.attr('cy', v_rightEye[1])
 			.attr('r', 20);
 
-		var eyes = chart.append('svg:g')
-			eyes.attr('transform', 'translate(0,0)');
-
-		var v_leftPupil = [v_leftEye[0], v_leftEye[1]];
-		var leftPupil = eyes.append('svg:circle')
+		var leftPupil = chart.append('svg:circle')
 			.style('fill', 'black')
-			.attr('cx', v_leftPupil[0])
-			.attr('cy', v_leftPupil[1])
+			.attr('cx', v_leftEye[0])
+			.attr('cy', v_leftEye[1])
 			.attr('r', 10);
 
-		var v_rightPupil = [v_rightEye[0], v_rightEye[1]];
-		var rightPupil = eyes.append('svg:circle')
+		var rightPupil = chart.append('svg:circle')
 			.style('fill', 'black')
-			.attr('cx', v_rightPupil[0])
-			.attr('cy', v_rightPupil[1])
+			.attr('cx', v_rightEye[0])
+			.attr('cy', v_rightEye[1])
 			.attr('r', 10);
 
 		d3.select('body').on('mousemove', function() {
 			var e = d3.event;
 			
-			// Compute the normalized vector
+			// Compute the normalized vector for the left eye
 			var v = [e.pageX - v_leftEye[0], e.pageY - v_leftEye[1]];
 			v_normalized = normalizedVector(v);
 
@@ -67,6 +60,7 @@
 				.attr('cx', v_leftEye[0] + v_normalized[0] * 10)
 				.attr('cy', v_leftEye[1] + v_normalized[1] * 10);
 
+			// Compute the normalized vector for the right eye
 			v = [e.pageX - v_rightEye[0], e.pageY - v_rightEye[1]];
 			v_normalized = normalizedVector(v);
 
