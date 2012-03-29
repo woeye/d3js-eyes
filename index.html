@@ -7,6 +7,13 @@
 
 <body>
 	<script>
+		// General variables
+		var mouseX = 0,
+			mouseY = 0,
+			mrYellowX = 200,
+			mrYellowY = 200;
+
+		// Build Mr. Yellow
 		var chart = d3.select('body').append('svg')
 			.attr('class', 'chart')
 			.attr('width', 400)
@@ -14,64 +21,79 @@
 
 		chart.append('svg:circle')
 			.style('fill', 'yellow')
-			.attr('cx', 200)
-			.attr('cy', 200)
+			.attr('cx', mrYellowX)
+			.attr('cy', mrYellowY)
 			.attr('r', 100);
 
+		var v_leftEye = [mrYellowX - 40, mrYellowY - 20];
 		chart.append('svg:circle')
 			.style('fill', 'white')
-			.attr('cx', 160)
-			.attr('cy', 180)
+			.attr('cx', v_leftEye[0])
+			.attr('cy', v_leftEye[1])
 			.attr('r', 20);
 
+		var v_rightEye = [mrYellowX + 40, mrYellowY - 20];
 		chart.append('svg:circle')
 			.style('fill', 'white')
-			.attr('cx', 240)
-			.attr('cy', 180)
+			.attr('cx', v_rightEye[0])
+			.attr('cy', v_rightEye[1])
 			.attr('r', 20);
 
 		var eyes = chart.append('svg:g')
 			eyes.attr('transform', 'translate(0,0)');
 
-		var leftEye = eyes.append('svg:circle')
+		var v_leftPupil = [v_leftEye[0], v_leftEye[1]];
+		var leftPupil = eyes.append('svg:circle')
 			.style('fill', 'black')
-			.attr('cx', 150)
-			.attr('cy', 175)
+			.attr('cx', v_leftPupil[0])
+			.attr('cy', v_leftPupil[1])
 			.attr('r', 10);
 
-		var rightEye = eyes.append('svg:circle')
+		var v_rightPupil = [v_rightEye[0], v_rightEye[1]];
+		var rightPupil = eyes.append('svg:circle')
 			.style('fill', 'black')
-			.attr('cx', 230)
-			.attr('cy', 175)
+			.attr('cx', v_rightPupil[0])
+			.attr('cy', v_rightPupil[1])
 			.attr('r', 10);
 
-		/*chart.selectAll('circle')
-			.data(data)
-			.enter()*/
-		//data.push({ x:step, y:step });
+		d3.select('body').on('mousemove', function() {
+			var e = d3.event;
+			
+			// Compute the normalized vector
+			var v = [e.pageX - v_leftEye[0], e.pageY - v_leftEye[1]];
+			v_normalized = normalizedVector(v);
+
+			leftPupil
+				.attr('cx', v_leftEye[0] + v_normalized[0] * 10)
+				.attr('cy', v_leftEye[1] + v_normalized[1] * 10);
+
+			v = [e.pageX - v_rightEye[0], e.pageY - v_rightEye[1]];
+			v_normalized = normalizedVector(v);
+
+			rightPupil
+				.attr('cx', v_rightEye[0] + v_normalized[0] * 10)
+				.attr('cy', v_rightEye[1] + v_normalized[1] * 10);
+		});
+
+		function normalizedVector(v) {
+			v_length = Math.sqrt(v[0] * v[0] + v[1] * v[1]);
+			return [v[0] / v_length, v[1] / v_length];
+		}
 
 		function doFancyTrans() {
-			d3.select('g')
+			// Normalize vector
+
+			/*d3.select('g')
 				.transition()
 				.duration(350)
 				.attr('transform', function(d) {
 					var xval = Math.random() * 20;
 					var yval = Math.random() * 10;
 					return 'translate(' + xval + ',' + yval + ')';
-				});
+				});*/
 		}
 		//doFancyTrans();
-		setInterval(doFancyTrans, 700);
-
-/*		chart.append('svg:circle')
-			.attr('cx', 5)
-			.attr('cy', 5)
-			.attr('r', 10);
-*/
-/*		var xScale = d3.scale.linear()
-			.domain([0, 10])
-			.range([400, 400]);
-*/
+		//setInterval(doFancyTrans, 700);
 	</script>
 </body>
 
