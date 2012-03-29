@@ -6,3 +6,7 @@ We call him Mr. Yellow.
 Why?
 ====
 Well, I wanted to learn d3.js and this was the result :) 
+
+Demo
+====
+Have fun: http://woeye.github.com/d3js-eyes/
